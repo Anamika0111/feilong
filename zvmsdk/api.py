@@ -921,7 +921,7 @@ class SDKAPI(object):
                      ipl_from='', ipl_param='', ipl_loadparam='',
                      dedicate_vdevs=None, loaddev={}, account='',
                      comment_list=None, cschedule='', cshare='',
-                     rdomain='', pcif=''):
+                     rdomain='', pcif='', logon_by=''):
         """create a VM in z/VM
 
         :param userid: (str) the userid of the VM to be created
@@ -993,6 +993,12 @@ class SDKAPI(object):
         :param cshare: a command input for share settings
         :param rdomain: a command input for relocation domain
         :param pcif: a command input for PCI function
+        :param logon_by: (str) the userid that is allowed to log on to the
+               guest (the LOGONBY statement in the user directory). If
+               specified, it replaces ``CONF.zvm.default_admin_userid`` for
+               this guest, so the cloud administrators listed in that option
+               will not be able to log on to the guest. If not specified,
+               ``CONF.zvm.default_admin_userid`` is used.
         """
         dedicate_vdevs = dedicate_vdevs or []
 
@@ -1095,7 +1101,7 @@ class SDKAPI(object):
                                          ipl_from, ipl_param, ipl_loadparam,
                                          dedicate_vdevs, loaddev, account,
                                          comment_list, cschedule, cshare,
-                                         rdomain, pcif)
+                                         rdomain, pcif, logon_by)
 
     @check_guest_exist()
     def guest_live_resize_cpus(self, userid, cpu_cnt, cpu_share=''):
